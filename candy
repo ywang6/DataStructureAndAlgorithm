@@ -1,0 +1,64 @@
+public class Solution {
+    public int candy(int[] ratings) {
+        if(ratings==null) return -1;
+        int n = ratings.length;
+        int[] candies = new int[n];
+        if(n==0) return 0;
+        int sum = 0;
+        candies[0] = 1;
+        // for(int i = 1; i<n; i++)
+        // {
+        //     //if previous guy has less rate
+        //     if(ratings[i]>ratings[i-1])
+        //     {
+        //         candies[i] = candies[i-1] + 1;
+        //         sum+=candies[i];
+        //     }
+        //     else if(ratings[i] == ratings[i-1]) // equals
+        //     {
+        //         candies[i] = candies[i-1];
+        //         sum+=candies[i];
+        //     }
+        //     else //previous guy has bigger rate, then we have two cases
+        //     {
+        //         // 1. if the subtract -1 still >=1
+        //         if(candies[i-1]-1>=1)
+        //         {
+        //             candies[i] = 1;
+        //             sum+=candies[i];
+        //         }
+        //         // 2. subtract <1
+        //         else
+        //         {
+        //             int k=i;
+        //             candies[k]++;
+        //             sum++;
+        //             // backtrack to increase 1s
+        //             while(k>0 && ratings[k-1]>ratings[k] && candies[k-1]<=candies[k])
+        //             {
+        //                 candies[k-1]++;
+        //                 sum++;
+        //                 k--;
+        //             }
+        //         }
+        //     }
+        // }
+        // this method will time exceeded. another method, from top to bot, and from bot to top
+        
+        for(int i = 0; i<n; i++)
+        candies[i] = 1;
+        for(int i = 1; i<n; i++)
+            if(ratings[i]>ratings[i-1])
+            candies[i] = candies[i-1] + 1;
+        for(int i = n-2; i>=0; i--)
+        {
+            if(ratings[i]>ratings[i+1] && candies[i]<=candies[i+1])
+                candies[i] = candies[i+1] + 1;
+        }
+        for(int i = 0; i<n; i++)
+        {
+            sum +=candies[i];
+        }
+        return sum;
+    }
+}
