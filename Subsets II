@@ -1,0 +1,32 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> subsetsWithDup(int[] S) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> buff= new ArrayList<Integer>();
+        int index = 0;
+        res.add(buff);
+        if(S.length == 0)
+        {
+            return res;
+        }
+        sub(res, buff, index, S);
+        return res;
+    }
+    public void sub(ArrayList<ArrayList<Integer>> res, ArrayList<Integer> buff, int index, int[] S)
+    {
+        if(index==S.length)
+        return;
+        
+        for(int i = index; i<S.length; i++)
+        {
+            ArrayList<Integer> nbuff = new ArrayList<Integer>(buff);
+            nbuff.add(S[i]);
+            Collections.sort(nbuff);
+            if(!res.contains(nbuff))
+            res.add(nbuff);
+            sub(res, nbuff, ++index, S);
+            
+        }
+    }
+}
